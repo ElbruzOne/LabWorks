@@ -1,0 +1,68 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script src="https://unpkg.com/vue@3.0.11/dist/vue.global.js"></script>
+</head>
+
+<body>
+
+<div id="app">
+    <button @click = "printMessage()">click</button>
+    <span>{{userText}}</span>
+    <br>
+    <span v-text = "greetings()"></span>
+    <br>
+    <a v-bind:href="getDayInfo()">About This Date</a>
+
+</div>
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                firstname: 'Oleksandr',
+                lastname: 'Odnokozov',
+                birthday: '07/07/1998',
+                userText: '',
+                greet: ''
+            }
+        },
+        methods : {
+            printMessage() {
+                var bdDate = new Date(this.birthday);
+                var todaysDate = new Date();
+                if (bdDate.getMonth() === todaysDate.getMonth() && bdDate.getDate() === todaysDate.getDate()) {
+                    this.userText = `Happy Birthday, ${this.firstname} ${this.lastname}`;
+                }
+                else {
+                    bdDate.setFullYear(1970);
+                    todaysDate.setFullYear(1970);
+                    var amountOfDays = bdDate - todaysDate;
+                    var difference = amountOfDays / (1000*60*60*24);
+                    if (difference < 0)
+                        difference = 365 + difference;
+                    this.userText = `Sorry, ${this.firstname} ${this.lastname}, you need to wait for ${Math.ceil(difference)} days for your birthday`;
+                }
+            },
+            greetings() {
+                var timeCurrent = new Date().getHours();
+                if (timeCurrent >=5 && timeCurrent <11) return "Good Morning";
+                else if (timeCurrent >=11 && timeCurrent <17) return "Good Day!";
+                else if (timeCurrent >=17 && timeCurrent <24) return "Good Evening!";
+                else if (timeCurrent >=0 && timeCurrent <5) return "Good Night!";
+            },
+            getDayInfo() {
+            var bdDate = new Date(this.birthday);
+            let day = bdDate.getDate();
+            let month = new Intl.DateTimeFormat('en-US', {month: 'long'}).format(bdDate);
+            return `https://en.wikipedia.org/wiki/${month}_${day}`;
+            }
+        }
+    })
+    const mountedApp = app.mount('#app');
+
+</script>
+</body>
+</html>
+
