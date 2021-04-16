@@ -53,10 +53,10 @@
                 else if (timeCurrent >=0 && timeCurrent <5) return "Good Night!";
             },
             getDayInfo() {
-            var bdDate = new Date(this.birthday);
-            let day = bdDate.getDate();
-            let month = new Intl.DateTimeFormat('en-US', {month: 'long'}).format(bdDate);
-            return `https://en.wikipedia.org/wiki/${month}_${day}`;
+                var bdDate = new Date(this.birthday);
+                let day = bdDate.getDate();
+                let month = new Intl.DateTimeFormat('en-US', {month: 'long'}).format(bdDate);
+                return `https://en.wikipedia.org/wiki/${month}_${day}`;
             }
         }
     })
